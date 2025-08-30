@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///C:/Users/user/Downloads/drink_order_line.html -->
+<html lang="zh-Hant"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>君品茶巷｜線上訂購</title>
+  <style>
+    :root{
+      --brand-dark:#6b7752;   /* 主色：深綠（照你的底色） */
+      --brand-light:#e6ebdf;  /* 淺底米綠 */
+      --ink:#2a2a2a;
+      --card:#ffffff;
+      --muted:#6c6c6c;
+      --shadow:0 6px 18px rgba(0,0,0,.08);
+      --radius:16px;
+    }
+    html,body{margin:0}
+    body{
+      font-family:"Microsoft JhengHei", system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans TC", Arial, sans-serif;
+      background:var(--brand-light);
+      color:var(--ink);
+    }
+    header{
+      position:sticky; top:0; z-index:10;
+      background:var(--brand-dark);
+      color:#fff; text-align:center; padding:18px 14px;
+      box-shadow:0 2px 12px rgba(0,0,0,.15);
+    }
+    header h1{margin:0; font-size:22px; letter-spacing:.08em}
+    header p{margin:6px 0 0; font-size:12px; opacity:.92}
+
+    .container{max-width:1060px; margin:18px auto 128px; padding:0 14px}
+
+    /* Tabs */
+    .tabs{display:flex; flex-wrap:wrap; gap:8px; position:sticky; top:74px; background:transparent; padding:10px 0; z-index:9}
+    .tab{background:#d9e0cd; color:#2f3328; border:none; padding:10px 14px; border-radius:999px; cursor:pointer; font-size:14px}
+    .tab.active{background:#fff; color:var(--brand-dark); box-shadow:var(--shadow);}
+
+    /* Menu grid */
+    .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin-top:14px}
+    .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; display:flex; flex-direction:column}
+    .card h3{margin:0 0 6px; font-size:16px; color:var(--brand-dark)}
+    .price{margin:0 0 10px; color:#333; font-weight:bold}
+    .field{font-size:13px; margin:6px 0}
+    .field select,.field input[type=number]{width:100%; padding:6px 8px; border:1px solid #d6dbc9; border-radius:10px; background:#fafbf7}
+    .addons{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+    .chip{border:1px solid #d6dbc9; border-radius:999px; padding:6px 10px; font-size:12px; background:#fff}
+    .add-btn{margin-top:auto; background:var(--brand-dark); color:#fff; border:none; border-radius:12px; padding:10px 12px; cursor:pointer}
+    .add-btn:hover{filter:brightness(.95)}
+
+    /* Cart */
+    .cart{
+      position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:4px solid var(--brand-dark);
+      box-shadow:0 -10px 24px rgba(0,0,0,.15); padding:12px 14px; z-index:20
+    }
+    .cart-wrap{max-width:1060px; margin:0 auto; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center}
+    .cart-list{max-height:120px; overflow:auto; margin:0; padding:0; list-style:none; font-size:13px}
+    .cart-item{display:flex; justify-content:space-between; gap:8px; padding:6px 0; border-bottom:1px dashed #eee}
+    .cart-item:last-child{border-bottom:none}
+    .cart-ops{display:flex; gap:6px}
+    .mini{padding:6px 8px; border:1px solid #dcdcdc; border-radius:8px; background:#fff; cursor:pointer; font-size:12px}
+    .checkout{background:var(--brand-dark); color:#fff; border:none; border-radius:12px; padding:10px 16px; cursor:pointer; white-space:nowrap}
+
+    .muted{color:var(--muted)}
+    footer{padding:24px 14px; text-align:center; color:#445; font-size:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>君品茶巷 線上訂購</h1>
+    <p>雲林縣斗南鎮五福路24號｜訂購電話 05-5968943</p>
+  </header>
+
+  <div class="container">
+    <div id="tabs" class="tabs"><button class="tab active">嚴選靚茶</button><button class="tab">醇奶系列</button><button class="tab">奶蓋</button><button class="tab">鮮奶系列</button><button class="tab">果汁系列</button><button class="tab">氣泡飲</button><button class="tab">QQ感</button><button class="tab">夏日飲品</button><button class="tab">熱飲</button><button class="tab">純粹吃</button></div>
+    <div id="grid" class="grid"><div class="card">
+          <h3>錫蘭紅茶</h3>
+          <div class="price">$30</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-0">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-0">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-0">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>茉香綠茶</h3>
+          <div class="price">$30</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-1">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-1">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-1">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>金萱青茶</h3>
+          <div class="price">$30</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-2">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-2">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-2">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>培火烏龍</h3>
+          <div class="price">$30</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-3">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-3">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-3">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>冬瓜茶</h3>
+          <div class="price">$30</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-4">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-4">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-4">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>蜂蜜紅茶</h3>
+          <div class="price">$35</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-5">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-5">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-5">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>蜂蜜綠茶</h3>
+          <div class="price">$35</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-6">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-6">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-6">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>烏龍綠茶</h3>
+          <div class="price">$35</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-7">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-7">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-7">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>冬瓜青茶</h3>
+          <div class="price">$35</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-8">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-8">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-8">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>梅子綠茶</h3>
+          <div class="price">$40</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-9">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-9">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-9">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>冰淇淋紅茶</h3>
+          <div class="price">$40</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-10">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-10">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-10">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div><div class="card">
+          <h3>多多綠</h3>
+          <div class="price">$45</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-嚴選靚茶-11">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-嚴選靚茶-11">
+              <option>正常糖</option><option>少糖</option><option>半糖</option><option>微糖</option><option>無糖</option>
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-嚴選靚茶-11">
+              <option>正常冰</option><option>少冰</option><option>微冰</option><option>去冰</option><option>完全去冰</option><option>熱飲</option>
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              <label class="chip"><input type="checkbox" data-idx="0" style="margin-right:6px">珍珠+5</label><label class="chip"><input type="checkbox" data-idx="1" style="margin-right:6px">波霸+5</label><label class="chip"><input type="checkbox" data-idx="2" style="margin-right:6px">椰果+5</label><label class="chip"><input type="checkbox" data-idx="3" style="margin-right:6px">寒天+10</label><label class="chip"><input type="checkbox" data-idx="4" style="margin-right:6px">仙草凍+10</label><label class="chip"><input type="checkbox" data-idx="5" style="margin-right:6px">綠茶凍+10</label><label class="chip"><input type="checkbox" data-idx="6" style="margin-right:6px">鳳梨凍+10</label><label class="chip"><input type="checkbox" data-idx="7" style="margin-right:6px">冰淇淋+15</label><label class="chip"><input type="checkbox" data-idx="8" style="margin-right:6px">布丁+15</label>
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        </div></div>
+    <footer>溫馨提醒：實際供應、甜度與冰量可依門市調整；若有特殊需求可在送出前於留言欄加註。</footer>
+  </div>
+
+  <div class="cart">
+    <div class="cart-wrap">
+      <div>
+        <strong>🛒 購物車</strong>
+        <ul id="cartList" class="cart-list"></ul>
+        <div class="muted">合計：<span id="total">$0</span></div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center">
+        <input id="note" placeholder="備註／外送地址等" style="padding:8px 10px;border:1px solid #d6dbc9;border-radius:10px;background:#fafbf7;min-width:220px">
+        <button class="checkout" onclick="sendOrder()">送出訂單 ➜ LINE</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ====== 可調整設定 ======
+    const LINE_ID = '@561jxkwk';
+
+    const SUGAR_OPTIONS = ['正常糖','少糖','半糖','微糖','無糖'];
+    const ICE_OPTIONS   = ['正常冰','少冰','微冰','去冰','完全去冰','熱飲'];
+
+    const ADDONS = [
+      { name:'珍珠', price:5 }, { name:'波霸', price:5 }, { name:'椰果', price:5 },
+      { name:'寒天', price:10 }, { name:'仙草凍', price:10 }, { name:'綠茶凍', price:10 }, { name:'鳳梨凍', price:10 },
+      { name:'冰淇淋', price:15 }, { name:'布丁', price:15 }
+    ];
+
+    // ====== 菜單資料（依你提供的菜單整理；個別價格若需更正可直接改這裡） ======
+    const MENU = {
+      '嚴選靚茶': [
+        { n:'錫蘭紅茶', p:30 }, { n:'茉香綠茶', p:30 }, { n:'金萱青茶', p:30 }, { n:'培火烏龍', p:30 },
+        { n:'冬瓜茶', p:30 }, { n:'蜂蜜紅茶', p:35 }, { n:'蜂蜜綠茶', p:35 }, { n:'烏龍綠茶', p:35 },
+        { n:'冬瓜青茶', p:35 }, { n:'梅子綠茶', p:40 }, { n:'冰淇淋紅茶', p:40 }, { n:'多多綠', p:45 }
+      ],
+      '醇奶系列': [
+        { n:'醇奶紅茶', p:40 }, { n:'茉香奶茶', p:40 }, { n:'金萱奶茶', p:40 }, { n:'烏龍奶茶', p:40 },
+        { n:'冬瓜奶茶', p:45 }, { n:'焦糖奶茶', p:45 }, { n:'玫瑰奶茶', p:45 }, { n:'冬瓜奶綠', p:45 },
+        { n:'巧克力奶茶', p:50 }, { n:'阿華田', p:45 }
+      ],
+      '奶蓋': [
+        { n:'奶蓋紅茶', p:50 }, { n:'奶蓋烏龍', p:50 }, { n:'奶蓋清茶', p:50 },
+        { n:'奶蓋可可', p:60 }, { n:'奶蓋阿華田', p:60 }, { n:'奶蓋燕麥奶茶', p:70 }
+      ],
+      '鮮奶系列': [
+        { n:'錫蘭鮮奶', p:55 }, { n:'茉香鮮奶', p:55 }, { n:'金萱鮮奶', p:55 }, { n:'烏龍鮮奶', p:60 },
+        { n:'冬瓜鮮奶', p:60 }, { n:'波波鮮奶', p:70 }, { n:'焦糖鮮奶', p:60 }, { n:'玫瑰鮮奶', p:60 },
+        { n:'黑糖珍珠鮮奶', p:70 }
+      ],
+      '果汁系列': [
+        { n:'檸檬紅茶', p:45 }, { n:'翡翠檸檬', p:55 }, { n:'金桔檸檬', p:45 }, { n:'檸檬青茶', p:45 },
+        { n:'冬瓜檸檬', p:45 }, { n:'葡萄柚綠', p:55 }, { n:'百香果綠茶', p:55 }, { n:'柳橙QQ綠', p:60 },
+        { n:'鳳梨青茶', p:45 }, { n:'檸檬多多', p:55 }, { n:'百香果多多', p:55 }, { n:'玫瑰檸檬茶', p:60 }
+      ],
+      '氣泡飲': [
+        { n:'梅子可樂', p:30 }, { n:'梅子雪碧', p:30 }, { n:'檸果氣泡飲', p:60 }, { n:'玫瑰青梅氣泡飲', p:60 }
+      ],
+      'QQ感': [
+        { n:'珍珠紅茶', p:35 }, { n:'珍珠綠茶', p:35 }, { n:'寒天QQ綠茶', p:40 }, { n:'3Q青茶', p:40 },
+        { n:'培火烏龍凍飲', p:40 }, { n:'珍珠奶茶', p:50 }, { n:'冬瓜珍珠奶茶', p:50 }, { n:'仙草凍奶茶', p:50 },
+        { n:'綠茶凍奶茶', p:55 }, { n:'椰果奶茶', p:55 }, { n:'布丁奶茶', p:55 }, { n:'焦糖珍珠奶茶', p:60 },
+        { n:'焦糖Q奶茶', p:55 }, { n:'紅豆珍珠奶茶', p:60 }, { n:'紅豆QQ奶茶', p:60 }
+      ],
+      '夏日飲品': [
+        { n:'綠豆沙', p:40 }, { n:'綠豆沙牛奶', p:50 }, { n:'西瓜芝士奶蓋', p:75 }, { n:'西瓜啵啵奶蓋', p:85 }
+      ],
+      '熱飲': [
+        { n:'桂圓紅棗茶', p:45 }, { n:'黑糖薑茶', p:45 }, { n:'桂圓紅棗奶茶', p:50 }
+      ],
+      '純粹吃': [ { n:'招牌仙草凍', p:35 } ]
+    };
+
+    // ====== App ======
+    const tabsEl = document.getElementById('tabs');
+    const gridEl = document.getElementById('grid');
+    const cartList = document.getElementById('cartList');
+    const totalEl = document.getElementById('total');
+
+    let activeTab = Object.keys(MENU)[0];
+    let cart = [];
+
+    function init(){
+      renderTabs();
+      renderGrid();
+      renderCart();
+    }
+
+    function renderTabs(){
+      tabsEl.innerHTML = '';
+      Object.keys(MENU).forEach(key =>{
+        const btn = document.createElement('button');
+        btn.className = 'tab' + (key===activeTab?' active':'');
+        btn.textContent = key;
+        btn.onclick = ()=>{ activeTab = key; renderTabs(); renderGrid(); window.scrollTo({top:120, behavior:'smooth'}); };
+        tabsEl.appendChild(btn);
+      })
+    }
+
+    function renderGrid(){
+      gridEl.innerHTML = '';
+      MENU[activeTab].forEach((item, idx)=>{
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${item.n}</h3>
+          <div class="price">$${item.p}</div>
+          <div class="field">數量
+            <input type="number" min="1" value="1" id="qty-${activeTab}-${idx}">
+          </div>
+          <div class="field">甜度
+            <select id="sugar-${activeTab}-${idx}">
+              ${SUGAR_OPTIONS.map(o=>`<option>${o}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">冰塊
+            <select id="ice-${activeTab}-${idx}">
+              ${ICE_OPTIONS.map(o=>`<option>${o}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">加料（可複選）
+            <div class="addons">
+              ${ADDONS.map((a,i)=>`<label class="chip"><input type="checkbox" data-idx="${i}" style="margin-right:6px">${a.name}+${a.price}</label>`).join('')}
+            </div>
+          </div>
+          <button class="add-btn">加入購物車</button>
+        `;
+        card.querySelector('.add-btn').onclick = ()=>{
+          const qty   = parseInt(document.getElementById(`qty-${activeTab}-${idx}`).value||'1',10);
+          const sugar = document.getElementById(`sugar-${activeTab}-${idx}`).value;
+          const ice   = document.getElementById(`ice-${activeTab}-${idx}`).value;
+          const addonsNodes = card.querySelectorAll('.addons input[type=checkbox]:checked');
+          const addons = Array.from(addonsNodes).map(n=>{
+            const a = ADDONS[parseInt(n.getAttribute('data-idx'))];
+            return { name:a.name, price:a.price };
+          });
+          addToCart({name:item.n, price:item.p, qty, sugar, ice, addons});
+        };
+        gridEl.appendChild(card);
+      });
+    }
+
+    function addToCart(entry){
+      cart.push(entry);
+      renderCart();
+    }
+
+    function removeFromCart(i){ cart.splice(i,1); renderCart(); }
+
+    function renderCart(){
+      cartList.innerHTML = '';
+      let sum = 0;
+      cart.forEach((c,i)=>{
+        const addonsText = c.addons && c.addons.length? ` + ${c.addons.map(a=>`${a.name}`).join('/')}` : '';
+        const addPrice = (c.addons||[]).reduce((t,a)=>t+a.price,0);
+        const line = (c.price + addPrice) * c.qty;
+        sum += line;
+        const li = document.createElement('li');
+        li.className='cart-item';
+        li.innerHTML = `<div>${c.name}${addonsText} ×${c.qty}（${c.sugar}，${c.ice}）</div><div class="cart-ops"><span>$${line}</span><button class="mini" onclick="removeFromCart(${i})">刪除</button></div>`;
+        cartList.appendChild(li);
+      });
+      totalEl.textContent = `$${sum}`;
+    }
+
+    function encode(s){return encodeURIComponent(s).replace(/\!/g,'%21').replace(/\*/g,'%2A').replace(/\'/g,'%27').replace(/\(/g,'%28').replace(/\)/g,'%29');}
+
+    function sendOrder(){
+      if(!cart.length){ alert('購物車是空的喔！'); return; }
+      let text = '【君品茶巷 線上訂購】%0A';
+      cart.forEach(c=>{
+        const addPrice = (c.addons||[]).reduce((t,a)=>t+a.price,0);
+        const addonsText = c.addons && c.addons.length? ` +${c.addons.map(a=>a.name+'+'+a.price).join('/')}` : '';
+        text += `${c.name}${addonsText} ×${c.qty}（${c.sugar}，${c.ice}）%0A`;
+      });
+      text += `合計：${totalEl.textContent}%0A`;
+      const note = document.getElementById('note').value.trim();
+      if(note) text += `備註：${encode(note)}%0A`;
+
+      // Deep link（多數手機可用），若裝置不支援，仍會顯示導向聊天頁面
+      const deep = `line://msg/text/${text}`;
+      // 後備：導向官方帳號聊天（可能無法預填文字）
+      const fallback = `https://line.me/R/ti/p/${LINE_ID}?text=${text}`;
+      // 嘗試開啟深連結
+      window.location.href = deep;
+      // 同時準備後備（不少瀏覽器會忽略第二次導向；此為保險用）
+      setTimeout(()=>{ window.location.href = fallback; }, 600);
+    }
+
+    init();
+  </script>
+
+
+</body></html>
